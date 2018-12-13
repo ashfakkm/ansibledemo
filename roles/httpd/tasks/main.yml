@@ -1,0 +1,53 @@
+---
+- name: checking if httpd is install
+  command: rpm -q httpd
+  args:
+    warn: False
+  register: is_installed
+  failed_when: is_installed.rc > 1
+
+- name: is https installed?
+  debug: msg='httpd apache is already installed'
+  when: is_installed.rc == 0
+
+- name: is https installed?
+  debug: msg='httpd apache is not installed'
+  when: is_installed.rc != 0
+
+- name: Install apache packages 
+  yum:
+    name: httpd
+    state: present
+  when: is_installed.rc != 0
+
+- name: ensure httpd is running
+  service:
+    name: httpd 
+    state: started
+
+- name: Open port 80 for http access
+  firewalld:
+    service: http
+    permanent: true
+    state: enabled
+
+- name: Restart the firewalld service to load in the firewall changes
+  service: 
+    name: firewalld 
+    state: restarted
+  when: is_installed.rc != 0
+
+- name: Download foo.conf
+  get_url:
+    url: http://google.com
+    dest: /var/www/html/index.html
+
+- uri:
+    url: "http://{{ inventory_hostname }}"
+    return_content: yes
+  register: webpage
+
+- name: Fail if google is not in the page content
+  fail:
+  when: "'google' not in webpage.content"
+

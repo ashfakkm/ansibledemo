@@ -1,0 +1,8 @@
+---
+# This Playbook runs all the common plays in the deployment
+- name: Register and auto-subscribe to available content.
+  redhat_subscription:
+    state: present
+    username: "{{ rhel_username }}"
+    password: "{{ rhel_password }}"
+    auto_attach: true

@@ -8,3 +8,8 @@
 - hosts: win2016
   roles:
   - role: windows
+
+- hosts: rhel75
+  roles:
+  - role: subscription
+  - role: httpd

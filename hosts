@@ -11,3 +11,11 @@ ansible_winrm_transport=certificate
 ansible_winrm_server_cert_validation=ignore
 ansible_winrm_cert_pem=/vagrant/cert.pem
 ansible_winrm_cert_key_pem=/vagrant/cert_key.pem
+
+[rhel75]
+192.168.33.11
+
+[rhel75:vars]
+ansible_connection=ssh
+ansible_user=root
+ansible_ssh_pass=vagrant
