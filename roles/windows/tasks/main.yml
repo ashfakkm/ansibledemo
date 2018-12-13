@@ -1,0 +1,18 @@
+---
+- name: Copy a patch file
+  win_copy:
+    src: /vagrant/windows10.0-kb4093137-x64_d4372b516a4e91705f68f5d38c0e1b0abf8072c9.msu
+    dest: c:\Temp\windows10.0-kb4093137-x64_d4372b516a4e91705f68f5d38c0e1b0abf8072c9.msu
+
+- name: install hotfix without validating the KB and Identifier
+  win_hotfix:
+    source: C:\Temp\windows10.0-kb4093137-x64_d4372b516a4e91705f68f5d38c0e1b0abf8072c9.msu
+    state: present
+  register: hotfix_install
+
+- name: Check for missing updates.
+  win_updates: state=searched
+  register: update_count
+
+- name: List missing updates
+  debug: var=update_count

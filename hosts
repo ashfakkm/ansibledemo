@@ -1,0 +1,13 @@
+#The site wide list of web servers
+
+[win2016]
+192.168.33.12
+
+[win2016:vars]
+#ansible_user=administrator
+#ansible_password=Password12
+ansible_connection=winrm
+ansible_winrm_transport=certificate
+ansible_winrm_server_cert_validation=ignore
+ansible_winrm_cert_pem=/vagrant/cert.pem
+ansible_winrm_cert_key_pem=/vagrant/cert_key.pem
