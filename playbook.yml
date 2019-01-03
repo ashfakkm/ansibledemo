@@ -5,9 +5,9 @@
 #  roles:
 #  - role: common
 
-- hosts: win2016
-  roles:
-  - role: windows
+#- hosts: win2016
+#  roles:
+#  - role: windows
 
 - hosts: rhel75
   roles:
